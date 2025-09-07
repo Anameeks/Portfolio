@@ -1,26 +1,212 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Anameeks</title>
-
+    <title>Anamika Dhar - Portfolio</title>
+    
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{% static 'base/style.css' %}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #6f42c1;
+            --secondary-color: #8a63d2;
+            --accent-color: #64ffda;
+            --dark-bg: #0f172a;
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+            --text-light: #f8fafc;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: var(--text-light);
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .glass-container {
+            backdrop-filter: blur(12px);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+        }
+        
+        .glass-card {
+            backdrop-filter: blur(10px);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+        }
+        
+        .navbar {
+            backdrop-filter: blur(10px);
+            background: rgba(111, 66, 193, 0.7) !important;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        
+        .profile-img {
+            border: 4px solid var(--glass-border);
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .profile-img:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(100, 255, 218, 0.5);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 50px;
+            padding: 12px 30px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(111, 66, 193, 0.3);
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50%;
+            color: var(--text-light);
+            margin: 0 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .section-title {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background: var(--accent-color);
+            border-radius: 3px;
+        }
+        
+        .project-image {
+            height: 200px;
+            object-fit: cover;
+            border-top-left-radius: 16px;
+            border-top-right-radius: 16px;
+        }
+        
+        .form-control {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            color: var(--text-light);
+            border-radius: 10px;
+            padding: 12px 15px;
+        }
+        
+        .form-control:focus {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 0.25rem rgba(100, 255, 218, 0.25);
+            color: var(--text-light);
+        }
+        
+        footer {
+            backdrop-filter: blur(10px);
+            background: rgba(111, 66, 193, 0.7) !important;
+            border-top: 1px solid var(--glass-border);
+        }
+        
+        /* Animation for text */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-text {
+            animation: fadeInUp 1s ease-out forwards;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .glass-container {
+                border-radius: 15px;
+                margin: 15px;
+                padding: 20px;
+            }
+            
+            .display-4 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
 </head>
-<body style="font-family: 'Roboto', sans-serif; background-color: #f3f0ff;">
-
-    <!-- Header / Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #6f42c1;">
+<body>
+    <!-- Interactive Background Canvas -->
+    <canvas id="bg-canvas"></canvas>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
         <div class="container">
-            <a class="navbar-brand" href="#">Anamika Dhar</a>
+            <a class="navbar-brand fw-bold" href="#">
+                <i class="fas fa-code me-2"></i>Anamika Dhar
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -36,65 +222,99 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="text-center py-5" style="background-color: #8a63d2; color: white;">
-        <div class="container">
-           
-            <h1 class="display-4">Anameeks's World</h1>
-            <img src="{% static 'base/anamika.jpg' %}" 
-     class="profile-img mb-3" 
-     alt="Anamika Dhar" 
-     width="150" 
-     height="150">
-
-            <p class="lead">Maps make me emotional. Airports make me dream.
-I'm not chasing destinations — I'm chasing moments: a song in a stranger’s car, rain in a new city, a late-night walk with no direction.</p>
-            <a href="#contact" class="btn btn-light btn-lg mt-3">Hire Me</a>
+    <section class="py-5 mt-5">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-8 mx-auto">
+                    <div class="glass-container p-5 text-center">
+                        <img src="anamika.jpg" 
+                             class="profile-img rounded-circle mb-4" 
+                             alt="Anamika Dhar" 
+                             width="180" 
+                             height="180">
+                        <h1 class="display-4 fw-bold mb-3 animate-text">Anamika's World</h1>
+                        <p class="lead mb-4 animate-text" style="animation-delay: 0.2s;">
+                            Maps make me emotional. Airports make me dream.
+                            I'm not chasing destinations — I'm chasing moments: a song in a stranger's car, 
+                            rain in a new city, a late-night walk with no direction.
+                        </p>
+                        <a href="#contact" class="btn btn-primary btn-lg mt-3 animate-text" style="animation-delay: 0.4s;">
+                            <i class="fas fa-paper-plane me-2"></i>Hire Me
+                        </a>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- About Section -->
     <section id="about" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-4" style="color: #6f42c1;">About Me</h2>
-            <p class="text-center">About Me
-🎓 Student at University of Asia Pacific (UAP)
-💻 Aspiring Web Developer & Programmer
-✍️ Curious Explorer
-🌱 Currently learning: Life
-💌 Reach me:<a href='anamikadhar02@gmail.com' >anamikadhar02@gmail.com
-</p>
+        <div class="container py-5">
+            <div class="glass-container p-5">
+                <h2 class="text-center section-title">About Me</h2>
+                <div class="row">
+                    <div class="col-md-10 mx-auto">
+                        <p class="text-center lead">
+                            <i class="fas fa-graduation-cap me-2"></i>🎓 Student at University of Asia Pacific (UAP)<br>
+                            <i class="fas fa-laptop-code me-2"></i>💻 Aspiring Web Developer & Programmer<br>
+                            <i class="fas fa-search me-2"></i>✍️ Curious Explorer<br>
+                            <i class="fas fa-seedling me-2"></i>🌱 Currently learning: Life<br>
+                            <i class="fas fa-envelope me-2"></i>💌 Reach me: 
+                            <a href="mailto:anamikadhar02@gmail.com" class="text-white">anamikadhar02@gmail.com</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-5" style="background-color: #e6e0f8;">
-        <div class="container">
-            <h2 class="text-center mb-4" style="color: #6f42c1;">My Projects</h2>
-            <div class="row">
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm">
-                        <img src="{% static 'base/project1.jpg' %}" class="card-img-top" alt="Project 1">
+    <section id="projects" class="py-5">
+        <div class="container py-5">
+            <h2 class="text-center section-title mb-5">My Projects</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="glass-card h-100">
+                        <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1674&q=80" 
+                             class="project-img card-img-top" alt="Project 1">
                         <div class="card-body">
-                            <h5 class="card-title">Project 1</h5>
+                            <h5 class="card-title">Student Resource Hub</h5>
                             <p class="card-text">A Django web application for managing student resources and internships.</p>
+                            <div class="mt-3">
+                                <span class="badge bg-primary me-1">Django</span>
+                                <span class="badge bg-primary me-1">Python</span>
+                                <span class="badge bg-primary">Bootstrap</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm">
-                        <img src="{% static 'base/project2.jpg' %}" class="card-img-top" alt="Project 2">
+                <div class="col-md-4">
+                    <div class="glass-card h-100">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1715&q=80" 
+                             class="project-img card-img-top" alt="Project 2">
                         <div class="card-body">
-                            <h5 class="card-title">Project 2</h5>
+                            <h5 class="card-title">Portfolio Website</h5>
                             <p class="card-text">Portfolio website built with Python, Django, and Bootstrap for showcasing skills.</p>
+                            <div class="mt-3">
+                                <span class="badge bg-primary me-1">HTML/CSS</span>
+                                <span class="badge bg-primary me-1">JavaScript</span>
+                                <span class="badge bg-primary">Bootstrap</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4 mb-4">
-                    <div class="card shadow-sm">
-                        <img src="{% static 'base/project3.jpg' %}" class="card-img-top" alt="Project 3">
+                <div class="col-md-4">
+                    <div class="glass-card h-100">
+                        <img src="https://images.unsplash.com/photo-1526947425960-945c6e72858f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" 
+                             class="project-img card-img-top" alt="Project 3">
                         <div class="card-body">
-                            <h5 class="card-title">Project 3</h5>
+                            <h5 class="card-title">Social Learning Platform</h5>
                             <p class="card-text">Creative project integrating Django with social features for students.</p>
+                            <div class="mt-3">
+                                <span class="badge bg-primary me-1">Django</span>
+                                <span class="badge bg-primary me-1">PostgreSQL</span>
+                                <span class="badge bg-primary">JavaScript</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -104,36 +324,154 @@ I'm not chasing destinations — I'm chasing moments: a song in a stranger’s c
 
     <!-- Contact Section -->
     <section id="contact" class="py-5">
-        <div class="container">
-            <h2 class="text-center mb-4" style="color: #6f42c1;">Contact Me</h2>
-            <form class="mx-auto" style="max-width: 600px;">
-                <div class="mb-3">
-                    <label for="name" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="name" placeholder="Your Name">
+        <div class="container py-5">
+            <div class="glass-container p-5">
+                <h2 class="text-center section-title">Contact Me</h2>
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <form>
+                            <div class="mb-4">
+                                <label for="name" class="form-label">Name</label>
+                                <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+                            </div>
+                            <div class="mb-4">
+                                <label for="message" class="form-label">Message</label>
+                                <textarea class="form-control" id="message" rows="5" placeholder="Your Message" required></textarea>
+                            </div>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-paper-plane me-2"></i>Send Message
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" placeholder="Your Email">
-                </div>
-                <div class="mb-3">
-                    <label for="message" class="form-label">Message</label>
-                    <textarea class="form-control" id="message" rows="5" placeholder="Your Message"></textarea>
-                </div>
-                <button type="submit" class="btn btn-primary" style="background-color: #6f42c1; border: none;">Send Message</button>
-            </form>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="text-center py-3" style="background-color: #6f42c1; color: white;">
-        &copy; 2025 Anamika Dhar | Follow me on 
-        <a href="#" style="color: white;">LinkedIn</a>, 
-        <a href="#" style="color: white;">GitHub</a>, 
-        <a href="#" style="color: white;">Twitter</a>
+    <footer class="text-center py-4 mt-5">
+        <div class="container">
+            <p>&copy; 2025 Anamika Dhar | Follow me on</p>
+            <div class="social-icons mb-3">
+                <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.facebook.com/share/1BXEzECRGZ/?mibextid=wwXIfr" class="social-icon"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+            </div>
+            <p>Made with <i class="fas fa-heart text-danger"></i> and <i class="fas fa-code text-info"></i></p>
+        </div>
     </footer>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- Interactive Background Script -->
+    <script>
+        // Interactive background with particles
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+        
+        // Particle class
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = Math.random() * 1 - 0.5;
+                this.speedY = Math.random() * 1 - 0.5;
+                this.color = `rgba(255, 255, 255, ${Math.random() * 0.2})`;
+            }
+            
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                
+                if (this.x > canvas.width || this.x < 0) {
+                    this.speedX = -this.speedX;
+                }
+                if (this.y > canvas.height || this.y < 0) {
+                    this.speedY = -this.speedY;
+                }
+            }
+            
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+        
+        // Create particles
+        const particles = [];
+        for (let i = 0; i < 100; i++) {
+            particles.push(new Particle());
+        }
+        
+        // Animation loop
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                
+                // Connect particles with lines
+                for (let j = i; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    
+                    if (distance < 100) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(255, 255, 255, ${0.1 - distance/1000})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+        
+        // Add scroll animations
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.glass-card, .section-title');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = 'fadeInUp 1s ease-out forwards';
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            
+            animatedElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
 </body>
 </html>
-
